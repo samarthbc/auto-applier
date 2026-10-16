@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auto Applier Test Forms</title>
+  <link rel="stylesheet" href="site.css">
+  <style>
+    h1 { margin: 0 0 6px; font-size: 26px; }
+    .lead { margin: 0 0 24px; color: #5d6370; max-width: 64ch; }
+    .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 14px; }
+    .card { display: grid; gap: 6px; padding: 16px 18px; background: #fff; border: 1px solid #dfe2e8; border-radius: 10px; text-decoration: none; color: inherit; }
+    .card:hover { border-color: #2f5bd3; }
+    .card b { font-size: 16px; color: #2f5bd3; }
+    .card span { color: #5d6370; font-size: 14px; }
+    .card small { color: #8a909b; font-size: 12px; }
+    ol { padding-left: 20px; color: #3b404b; }
+    kbd { font: 12px Consolas, monospace; padding: 1px 5px; border: 1px solid #c9cdd6; border-bottom-width: 2px; border-radius: 4px; background: #fff; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Auto Applier test forms</h1>
+    <p class="lead">Sample job application forms for trying the extension. Each one tests different things real sites do. None of them submit anywhere.</p>
+
+    <ol>
+      <li>Save your details in the extension first (right-click the icon → Options), or upload a resume there.</li>
+      <li>Open a form below and click the Auto Applier icon, or press <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd>.</li>
+      <li>The <b>Fill report</b> panel in the bottom-left corner shows what was filled and what was missed. Click a missed item to jump to it. Use <b>Clear form</b> to try again.</li>
+    </ol>
+
+    <div class="cards">
+      <a class="card" href="careers.html">
+        <b>Careers page form</b>
+        <span>Typical ATS layout: contact details, resume upload, two job sections, education, Yes/No questions, dropdowns and EEO questions.</span>
+        <small>Tests: labels, radios, selects, file upload, repeated job blocks</small>
+      </a>
+      <a class="card" href="campus.html">
+        <b>Campus hiring portal</b>
+        <span>Table-based form with 10th, PU / 12th and degree marks, CTC, notice period, date of birth and address.</span>
+        <small>Tests: school levels, poor markup, date input, placeholders only</small>
+      </a>
+      <a class="card" href="react.html">
+        <b>React form</b>
+        <span>Inputs controlled by React state. A live panel shows what React actually received.</span>
+        <small>Tests: framework-controlled inputs</small>
+      </a>
+      <a class="card" href="embedded.html">
+        <b>Embedded form</b>
+        <span>A company page with the application form inside an iframe from a different origin, like embedded Greenhouse or Lever forms.</span>
+        <small>Tests: cross-origin iframes</small>
+      </a>
+    </div>
+  </div>
+</body>
+</html>

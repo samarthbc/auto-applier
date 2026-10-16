@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Careers · Harbor Freightworks</title>
+  <link rel="stylesheet" href="site.css">
+  <style>
+    body { background: #f7f5f0; }
+    .hero { background: #12343b; color: #f3efe6; padding: 30px 0; }
+    .hero .wrap { padding-bottom: 30px; }
+    .hero h1 { margin: 0; font-size: 28px; }
+    .hero p { margin: 6px 0 0; opacity: .8; }
+    iframe { width: 100%; height: 980px; border: 1px solid #ddd6c8; border-radius: 10px; background: #fff; }
+    .origin { font: 12px Consolas, monospace; color: #6b665c; margin: 0 0 8px; }
+  </style>
+</head>
+<body>
+  <div class="hero"><div class="wrap">
+    <div class="crumb"><a href="index.html" style="color:#9fd2c9">← All test forms</a></div>
+    <h1>Product Designer</h1>
+    <p>Harbor Freightworks · Pune, India</p>
+  </div></div>
+  <div class="wrap">
+    <div class="test-note"><b>What this tests:</b> the application form below is inside an iframe served from a different origin than this page, like Greenhouse or Lever forms embedded on company sites. The extension needs to reach into the iframe to fill it. The Fill report for the form is inside the iframe.</div>
+    <p class="origin" id="origin"></p>
+    <iframe id="frame" title="Application form"></iframe>
+  </div>
+  <script>
+    // Serve the form from the "other" host name so the iframe is cross-origin (localhost ↔ 127.0.0.1).
+    const other = location.hostname === 'localhost' ? '127.0.0.1' : 'localhost';
+    const src = `${location.protocol}//${other}:${location.port}/embed-form.html`;
+    document.getElementById('frame').src = src;
+    document.getElementById('origin').textContent = `This page: ${location.origin} · Form: ${new URL(src).origin}`;
+  </script>
+</body>
+</html>

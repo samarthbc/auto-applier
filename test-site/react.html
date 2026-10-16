@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Apply · Lumen Analytics (React)</title>
+  <link rel="stylesheet" href="site.css">
+  <style>
+    body { background: #f3f2f8; }
+    .layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 20px; align-items: start; }
+    .card { background: #fff; border-radius: 12px; padding: 22px 24px; box-shadow: 0 1px 3px rgba(30, 20, 60, .08); }
+    h1 { margin: 0 0 4px; font-size: 22px; }
+    .sub { margin: 0 0 20px; color: #6a6580; }
+    .f { display: grid; gap: 5px; margin-bottom: 14px; }
+    .f label, .q-label { font-size: 13px; font-weight: 600; color: #3d3852; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+    .question { margin-bottom: 14px; }
+    .opts { display: flex; gap: 16px; margin-top: 5px; }
+    .opts label { display: flex; gap: 6px; align-items: center; font-weight: 400; font-size: 14px; }
+    .state { position: sticky; top: 16px; font-size: 12px; }
+    .state h2 { margin: 0 0 6px; font-size: 14px; }
+    .state p { margin: 0 0 10px; color: #6a6580; }
+    .state table { width: 100%; border-collapse: collapse; }
+    .state td { padding: 3px 0; border-bottom: 1px solid #f0eef6; vertical-align: top; }
+    .state td:first-child { color: #6a6580; width: 46%; }
+    .state td:last-child { font-family: Consolas, monospace; word-break: break-word; }
+    .bad { color: #c0392b; }
+    .submit { padding: 10px 20px; border: 0; border-radius: 8px; background: #5b3fd6; color: #fff; font-weight: 600; }
+    .submit:disabled { background: #c9c3e6; cursor: not-allowed; }
+    @media (max-width: 760px) { .layout { grid-template-columns: 1fr; } .two { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">← All test forms</a></div>
+    <div class="test-note"><b>What this tests:</b> inputs controlled by React state. Simply setting an input's value doesn't update React, and the value disappears on the next render. The panel on the right shows what React actually received. If a field shows a value but React's state is empty, it's marked in red.</div>
+    <div id="root"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"></script>
+  <script>
+    const h = React.createElement;
+    const EMPTY = { firstName: '', lastName: '', email: '', phone: '', city: '', linkedin: '', company: '', title: '', years: '', expected: '', notice: '', authorized: '', why: '' };
+    const LABELS = { firstName: 'First name', lastName: 'Last name', email: 'Email address', phone: 'Mobile number', city: 'City', linkedin: 'LinkedIn URL', company: 'Current company', title: 'Current job title', years: 'Years of experience', expected: 'Expected salary', notice: 'Notice period', why: 'Why are you interested in this role?' };
+
+    function App() {
+      const [form, setForm] = React.useState(EMPTY);
+      const [, tick] = React.useState(0);
+      React.useEffect(() => {
+        const reset = () => setForm(EMPTY);
+        document.addEventListener('aa-test-reset', reset);
+        const t = setInterval(() => tick((n) => n + 1), 700); // re-render so DOM vs state mismatches show up
+        return () => { document.removeEventListener('aa-test-reset', reset); clearInterval(t); };
+      }, []);
+      const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+      const input = (k, type = 'text') =>
+        h('div', { className: 'f' }, h('label', { htmlFor: 'r-' + k }, LABELS[k]), h('input', { id: 'r-' + k, type, value: form[k], onChange: set(k) }));
+      const filled = Object.values(form).filter(Boolean).length;
+
+      return h('div', { className: 'layout' },
+        h('form', { className: 'card', onSubmit: (e) => { e.preventDefault(); alert('This is a test form. Nothing was sent.'); } },
+          h('h1', null, 'Data Engineer'),
+          h('p', { className: 'sub' }, 'Lumen Analytics · Remote (India)'),
+          h('div', { className: 'two' }, input('firstName'), input('lastName')),
+          h('div', { className: 'two' }, input('email', 'email'), input('phone', 'tel')),
+          h('div', { className: 'two' }, input('city'), input('linkedin', 'url')),
+          h('div', { className: 'two' }, input('company'), input('title')),
+          h('div', { className: 'two' }, input('years'), input('expected')),
+          h('div', { className: 'f' },
+            h('label', { htmlFor: 'r-notice' }, LABELS.notice),
+            h('select', { id: 'r-notice', value: form.notice, onChange: set('notice') },
+              ['', 'Immediate', '15 days', '30 days', '60 days', '90 days'].map((o) => h('option', { key: o, value: o }, o || 'Select…')))),
+          h('div', { className: 'question', role: 'radiogroup', 'aria-labelledby': 'q-auth' },
+            h('div', { className: 'q-label', id: 'q-auth' }, 'Are you legally authorized to work in India?'),
+            h('div', { className: 'opts' }, ['Yes', 'No'].map((o) =>
+              h('label', { key: o }, h('input', { type: 'radio', name: 'authorized', value: o, checked: form.authorized === o, onChange: set('authorized') }), o)))),
+          h('div', { className: 'f' }, h('label', { htmlFor: 'r-why' }, LABELS.why), h('textarea', { id: 'r-why', value: form.why, onChange: set('why') })),
+          h('button', { className: 'submit', type: 'submit', disabled: !form.firstName || !form.email }, 'Submit application')),
+        h('aside', { className: 'card state' },
+          h('h2', null, `React state · ${filled}/${Object.keys(form).length}`),
+          h('p', null, 'The Submit button only enables when React has a first name and email.'),
+          h('table', null, h('tbody', null, Object.keys(form).map((k) => {
+            const dom = k === 'authorized' ? (document.querySelector('input[name=authorized]:checked') || {}).value || '' : (document.getElementById('r-' + k) || {}).value || '';
+            const mismatch = dom && !form[k];
+            return h('tr', { key: k }, h('td', null, k), h('td', { className: mismatch ? 'bad' : '' }, mismatch ? `not in state (field shows "${dom}")` : form[k] || '—'));
+          })))));
+    }
+    ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+  </script>
+  <script src="score.js"></script>
+</body>
+</html>

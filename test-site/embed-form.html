@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Application form</title>
+  <link rel="stylesheet" href="site.css">
+  <style>
+    body { background: #fff; }
+    .wrap { padding: 22px 24px 180px; }
+    h2 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #6b665c; margin: 26px 0 12px; }
+    h2:first-of-type { margin-top: 0; }
+    .application-question { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 12px; align-items: center; margin-bottom: 12px; }
+    .application-label { font-size: 14px; color: #2c2a26; }
+    .opts { display: flex; gap: 16px; }
+    .opts label { display: flex; gap: 6px; align-items: center; }
+    .submit { margin-top: 16px; padding: 10px 22px; border: 0; border-radius: 6px; background: #12343b; color: #fff; font-weight: 600; }
+    @media (max-width: 600px) { .application-question { grid-template-columns: 1fr; gap: 4px; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <form onsubmit="event.preventDefault(); alert('This is a test form. Nothing was sent.');">
+      <h2>Submit your application</h2>
+      <!-- Lever-style markup: the question text is a sibling div, not a <label> -->
+      <div class="application-question"><div class="application-label">Resume/CV</div><div><input type="file" name="resume"></div></div>
+      <div class="application-question"><div class="application-label">Full name</div><div><input type="text" name="name"></div></div>
+      <div class="application-question"><div class="application-label">Email</div><div><input type="email" name="email"></div></div>
+      <div class="application-question"><div class="application-label">Phone</div><div><input type="tel" name="phone"></div></div>
+      <div class="application-question"><div class="application-label">Current company</div><div><input type="text" name="org"></div></div>
+
+      <h2>Links</h2>
+      <div class="application-question"><div class="application-label">LinkedIn URL</div><div><input type="url" name="urls[LinkedIn]"></div></div>
+      <div class="application-question"><div class="application-label">Portfolio URL</div><div><input type="url" name="urls[Portfolio]"></div></div>
+      <div class="application-question"><div class="application-label">Behance / Dribbble</div><div><input type="url" name="urls[Other]"></div></div>
+
+      <h2>Additional information</h2>
+      <div class="application-question"><div class="application-label">Where are you based?</div><div><input type="text" name="cards[location]"></div></div>
+      <div class="application-question"><div class="application-label">Expected salary</div><div><input type="text" name="cards[salary]"></div></div>
+      <div class="application-question question">
+        <div class="application-label q-label">Do you require visa sponsorship?</div>
+        <div class="opts"><label><input type="radio" name="cards[visa]" value="Yes"> Yes</label><label><input type="radio" name="cards[visa]" value="No"> No</label></div>
+      </div>
+      <div class="application-question"><div class="application-label">Anything else you'd like us to know?</div><div><textarea name="comments"></textarea></div></div>
+
+      <button type="submit" class="submit">Submit application</button>
+    </form>
+  </div>
+  <script src="score.js"></script>
+</body>
+</html>

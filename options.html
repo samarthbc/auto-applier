@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auto Applier</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="logo">A</span>Auto Applier</div>
+    <div class="spacer"></div>
+    <div id="saveState" class="save-state" data-state="saved"><i></i><span>All changes saved</span></div>
+    <button id="save" type="button" class="btn primary">Save</button>
+  </header>
+
+  <div class="layout">
+    <nav id="nav" class="nav" aria-label="Sections">
+      <div id="navItems" class="nav-items"></div>
+      <div class="completeness">
+        <div class="completeness-row"><span>Profile</span><span id="completePct">0%</span></div>
+        <div class="bar"><span id="completeBar"></span></div>
+      </div>
+    </nav>
+
+    <main class="main">
+      <!-- Quick start -->
+      <section class="panel" data-panel="quick-start" hidden>
+        <div class="panel-head">
+          <h1>Quick start</h1>
+          <p>Upload your resume and most of your details are filled in for you. Then review each section and save.</p>
+        </div>
+
+        <label id="dropZone" class="dropzone" for="parseFile">
+          <svg class="dz-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg>
+          <span class="dz-title">Drop your resume here, or <u>choose a file</u></span>
+          <span class="dz-sub">PDF, DOCX or TXT</span>
+          <input id="parseFile" type="file" accept=".pdf,.docx,.txt" hidden>
+        </label>
+
+        <div class="parse-options">
+          <span id="parserMode" class="parser-mode"></span>
+          <label class="check"><input id="parseOverwrite" type="checkbox"> Replace details I've already entered</label>
+        </div>
+
+        <div id="parseResult" class="result" hidden>
+          <p id="parseStatus" class="result-text"></p>
+          <div id="parseJump" class="jump"></div>
+        </div>
+
+        <ol class="steps">
+          <li><strong>Upload your resume</strong><span>Details are filled into the sections on the left. Fields filled this way are tagged "From resume".</span></li>
+          <li><strong>Review and save</strong><span>Check each section, fill anything missing (salary, notice period, eligibility), then click Save.</span></li>
+          <li><strong>Fill any application</strong><span>On a job form, click the Auto Applier icon or press <kbd>Alt</kbd>+<kbd>Shift</kbd>+<kbd>F</kbd>.</span></li>
+        </ol>
+      </section>
+
+      <!-- Profile sections are generated from fields.js -->
+      <form id="profile" class="profile" autocomplete="off"></form>
+
+      <!-- Answers -->
+      <section class="panel" data-panel="answers" hidden>
+        <div class="panel-head">
+          <h1>Answers</h1>
+          <p>Your answers to questions that keep coming up. When a form question contains one of the keywords, the answer is filled in.</p>
+        </div>
+        <div id="custom" class="answers"></div>
+        <button id="addCustom" type="button" class="btn">+ Add answer</button>
+      </section>
+
+      <!-- Resume -->
+      <section class="panel" data-panel="resume" hidden>
+        <div class="panel-head">
+          <h1>Resume</h1>
+          <p>Attached automatically to "Resume" or "CV" upload fields on application forms.</p>
+        </div>
+        <div class="file-card">
+          <svg class="file-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+          <div class="file-info">
+            <span id="resumeName" class="file-name">No resume saved</span>
+            <span id="resumeMeta" class="file-meta">Upload one here or from Quick start.</span>
+          </div>
+          <label class="btn">Replace<input id="resumeFile" type="file" accept=".pdf,.doc,.docx,.txt,.rtf" hidden></label>
+          <button id="resumeClear" type="button" class="btn danger" hidden>Remove</button>
+        </div>
+      </section>
+
+      <!-- Settings -->
+      <section class="panel" data-panel="settings" hidden>
+        <div class="panel-head">
+          <h1>Settings</h1>
+        </div>
+
+        <div class="group">
+          <h2>Filling forms</h2>
+          <label class="check"><input id="overwrite" type="checkbox"> Overwrite fields that already have a value</label>
+          <div class="setting-row">
+            <div><strong>Keyboard shortcut</strong><span class="muted">Default is Alt+Shift+F.</span></div>
+            <button id="shortcuts" type="button" class="btn">Change shortcut</button>
+          </div>
+        </div>
+
+        <div class="group">
+          <h2>AI resume parsing</h2>
+          <p class="muted">Optional. With a Groq API key, resumes are read by an AI model, which handles unusual layouts much better. Your resume's text is sent to Groq when you upload it. Without a key, parsing stays on your computer. Get a free key at <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a>.</p>
+          <div class="grid">
+            <div class="field">
+              <label for="groqKey">Groq API key</label>
+              <!-- type=text + masking (not type=password) so Chrome's password manager doesn't autofill a saved password here -->
+              <div class="key-row">
+                <input id="groqKey" type="text" class="masked" placeholder="gsk_…" autocomplete="off" spellcheck="false" data-lpignore="true" data-1p-ignore>
+                <button id="toggleKey" type="button" class="btn">Show</button>
+              </div>
+            </div>
+            <div class="field">
+              <label for="groqModel">Model</label>
+              <select id="groqModel"></select>
+              <small id="modelNote" class="muted"></small>
+            </div>
+          </div>
+        </div>
+
+        <div class="group">
+          <h2>Backup</h2>
+          <p class="muted">Save your details and resume to a file, or load them in another browser. The API key isn't included.</p>
+          <div class="row">
+            <button id="export" type="button" class="btn">Export</button>
+            <label class="btn">Import<input id="import" type="file" accept="application/json" hidden></label>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div id="status" class="toast" role="status"></div>
+
+  <script src="lib/pdf.min.js"></script>
+  <script src="resume-parser.js"></script>
+  <script src="fields.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

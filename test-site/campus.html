@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Recruitment 2026 · Registration</title>
+  <link rel="stylesheet" href="site.css">
+  <style>
+    body { background: #eef1f6; }
+    .portal { background: #fff; border: 1px solid #cfd6e3; border-radius: 4px; overflow: hidden; }
+    .portal-head { background: #1d3a6e; color: #fff; padding: 14px 20px; }
+    .portal-head h1 { margin: 0; font-size: 20px; }
+    .portal-head p { margin: 2px 0 0; font-size: 13px; opacity: .8; }
+    .sec { background: #e7ecf5; color: #1d3a6e; font-weight: 700; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; padding: 8px 20px; }
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 8px 20px; border-bottom: 1px solid #edf0f5; vertical-align: middle; }
+    td:first-child { width: 38%; font-size: 14px; color: #33405a; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 12px 20px; border-bottom: 1px solid #edf0f5; }
+    .actions { padding: 16px 20px; display: flex; gap: 10px; }
+    .actions button { padding: 9px 20px; border: 0; border-radius: 4px; background: #1d3a6e; color: #fff; font-weight: 600; }
+    @media (max-width: 640px) { td { display: block; width: auto !important; border: 0; padding: 6px 16px; } tr { display: block; border-bottom: 1px solid #edf0f5; padding: 6px 0; } .grid3 { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">← All test forms</a></div>
+    <div class="test-note"><b>What this tests:</b> a table layout where labels sit in a separate cell (no &lt;label&gt; tags), separate 10th, PU / 12th and degree rows (each should get its own entry), CTC, notice period, a date-of-birth date picker, and an address block that only has placeholders.</div>
+
+    <form class="portal" onsubmit="event.preventDefault(); alert('This is a test form. Nothing was sent.');">
+      <div class="portal-head">
+        <h1>Campus Recruitment Drive 2026</h1>
+        <p>Candidate registration · Graduate Engineer Trainee</p>
+      </div>
+
+      <div class="sec">Personal details</div>
+      <table>
+        <tr><td>Candidate Name (as per marksheet)</td><td><input type="text" name="cand_name"></td></tr>
+        <tr><td>Date of Birth</td><td><input type="date" name="dob"></td></tr>
+        <tr><td>Gender</td><td><select name="gender"><option value="">-- Select --</option><option value="M">Male</option><option value="F">Female</option><option value="O">Other</option></select></td></tr>
+        <tr><td>Email ID</td><td><input type="email" name="mail_id"></td></tr>
+        <tr><td>Mobile Number</td><td><input type="tel" name="mobile_no"></td></tr>
+      </table>
+
+      <div class="sec">Address</div>
+      <div class="grid3">
+        <input type="text" name="addr1" placeholder="Address line 1" style="grid-column: span 3">
+        <input type="text" name="addr_city" placeholder="City">
+        <input type="text" name="addr_state" placeholder="State">
+        <input type="text" name="addr_pin" placeholder="PIN code">
+      </div>
+
+      <div class="sec">Academic details</div>
+      <table>
+        <tr><td>10th / SSLC School Name</td><td><input type="text" name="ssc_school"></td></tr>
+        <tr><td>10th Board</td><td><input type="text" name="ssc_board"></td></tr>
+        <tr><td>10th Percentage</td><td><input type="text" name="ssc_pct"></td></tr>
+        <tr><td>10th Year of Passing</td><td><input type="text" name="ssc_year"></td></tr>
+        <tr><td>12th / PUC College Name</td><td><input type="text" name="hsc_college"></td></tr>
+        <tr><td>12th / PUC Stream</td><td><input type="text" name="hsc_stream"></td></tr>
+        <tr><td>12th / PUC Percentage</td><td><input type="text" name="hsc_pct"></td></tr>
+        <tr><td>12th / PUC Year of Passing</td><td><input type="text" name="hsc_year"></td></tr>
+        <tr><td>Graduation College / University</td><td><input type="text" name="ug_college"></td></tr>
+        <tr><td>Degree</td><td><input type="text" name="ug_degree"></td></tr>
+        <tr><td>Branch / Specialization</td><td><input type="text" name="ug_branch"></td></tr>
+        <tr><td>Aggregate CGPA</td><td><input type="text" name="ug_cgpa"></td></tr>
+        <tr><td>Year of Graduation</td><td><input type="text" name="ug_year"></td></tr>
+      </table>
+
+      <div class="sec">Professional details</div>
+      <table>
+        <tr><td>Total Experience (years)</td><td><input type="text" name="exp_total"></td></tr>
+        <tr><td>Current Employer</td><td><input type="text" name="cur_emp"></td></tr>
+        <tr><td>Current Designation</td><td><input type="text" name="cur_desig"></td></tr>
+        <tr><td>Current CTC</td><td><input type="text" name="ctc_now"></td></tr>
+        <tr><td>Expected CTC</td><td><input type="text" name="ctc_exp"></td></tr>
+        <tr><td>Notice Period</td><td><select name="np"><option value="">-- Select --</option><option>Immediate</option><option>15 days</option><option>30 days</option><option>60 days</option><option>90 days</option></select></td></tr>
+        <tr><td>Key Skills</td><td><textarea name="skills_txt"></textarea></td></tr>
+        <tr><td>LinkedIn URL</td><td><input type="url" name="li_url"></td></tr>
+        <tr><td>LeetCode / HackerRank profile</td><td><input type="url" name="coding_url"></td></tr>
+      </table>
+
+      <div class="actions"><button type="submit">Register</button></div>
+    </form>
+  </div>
+  <script src="score.js"></script>
+</body>
+</html>

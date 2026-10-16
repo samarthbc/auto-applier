@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Senior Backend Engineer · Northwind Labs</title>
+  <link rel="stylesheet" href="site.css">
+  <style>
+    body { background: #fff; }
+    .job-head { border-bottom: 1px solid #e6e8ec; padding-bottom: 18px; margin-bottom: 26px; }
+    .job-head h1 { margin: 0; font-size: 28px; }
+    .job-head p { margin: 4px 0 0; color: #5d6370; }
+    h2 { font-size: 18px; margin: 34px 0 14px; padding-top: 18px; border-top: 1px solid #eef0f3; }
+    h3 { font-size: 15px; margin: 18px 0 10px; color: #3b404b; }
+    .field { display: grid; gap: 5px; margin-bottom: 16px; }
+    .field > label, .q-label { font-weight: 600; font-size: 14px; }
+    .req { color: #c0392b; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+    .block { border: 1px solid #e6e8ec; border-radius: 8px; padding: 6px 16px 2px; margin-bottom: 12px; background: #fafbfc; }
+    fieldset { border: 0; padding: 0; margin: 0 0 16px; }
+    legend { font-weight: 600; font-size: 14px; margin-bottom: 6px; padding: 0; }
+    .opts { display: flex; gap: 18px; }
+    .opts label { display: flex; gap: 6px; align-items: center; font-weight: 400; }
+    .add { background: none; border: 1px dashed #b9bec9; border-radius: 6px; padding: 7px 12px; color: #2f5bd3; margin-bottom: 8px; }
+    .submit { margin-top: 26px; padding: 11px 22px; background: #1f6f4a; color: #fff; border: 0; border-radius: 6px; font-weight: 600; }
+    .consent { display: flex; gap: 8px; font-size: 14px; color: #3b404b; }
+    @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="crumb"><a href="index.html">← All test forms</a></div>
+    <div class="test-note"><b>What this tests:</b> standard labels, a resume upload, two job sections (job 1 and job 2 should go in order), education, Yes/No radio questions, dropdowns and EEO questions. "Add another" adds a third job section; click the extension again to fill it.</div>
+
+    <div class="job-head">
+      <h1>Senior Backend Engineer</h1>
+      <p>Northwind Labs · Bengaluru, India (Hybrid) · Full-time</p>
+    </div>
+
+    <form id="application" onsubmit="event.preventDefault(); alert('This is a test form. Nothing was sent.');">
+      <h2 style="border-top:0;margin-top:0;padding-top:0">Personal information</h2>
+      <div class="row">
+        <div class="field"><label for="first_name">First Name <span class="req">*</span></label><input type="text" id="first_name" name="job_application[first_name]"></div>
+        <div class="field"><label for="last_name">Last Name <span class="req">*</span></label><input type="text" id="last_name" name="job_application[last_name]"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="email">Email <span class="req">*</span></label><input type="email" id="email" name="job_application[email]"></div>
+        <div class="field"><label for="phone">Phone</label><input type="tel" id="phone" name="job_application[phone]"></div>
+      </div>
+      <div class="field"><label for="loc">Location (City)</label><input type="text" id="loc" name="job_application[location]" placeholder="Start typing…"></div>
+
+      <div class="field">
+        <label for="resume">Resume/CV <span class="req">*</span></label>
+        <input type="file" id="resume" name="job_application[resume]" accept=".pdf,.doc,.docx">
+      </div>
+      <div class="field">
+        <label for="cover">Cover Letter</label>
+        <textarea id="cover" name="job_application[cover_letter_text]"></textarea>
+      </div>
+
+      <h2>Links</h2>
+      <div class="field"><label for="li">LinkedIn Profile</label><input type="url" id="li" name="urls[LinkedIn]"></div>
+      <div class="row">
+        <div class="field"><label for="gh">GitHub URL</label><input type="url" id="gh" name="urls[GitHub]"></div>
+        <div class="field"><label for="web">Website</label><input type="url" id="web" name="urls[Portfolio]"></div>
+      </div>
+      <div class="field"><label for="lc">LeetCode profile (optional)</label><input type="url" id="lc" name="urls[Other]"></div>
+
+      <h2>Experience</h2>
+      <div id="jobs">
+        <div class="block job">
+          <h3>Job 1</h3>
+          <div class="row">
+            <div class="field"><label for="c1">Company</label><input type="text" id="c1"></div>
+            <div class="field"><label for="t1">Title</label><input type="text" id="t1"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="s1">Start date</label><input type="month" id="s1"></div>
+            <div class="field"><label for="e1">End date</label><input type="text" id="e1" placeholder="MM/YYYY or Present"></div>
+          </div>
+        </div>
+        <div class="block job">
+          <h3>Job 2</h3>
+          <div class="row">
+            <div class="field"><label for="c2">Company</label><input type="text" id="c2"></div>
+            <div class="field"><label for="t2">Title</label><input type="text" id="t2"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="s2">Start date</label><input type="month" id="s2"></div>
+            <div class="field"><label for="e2">End date</label><input type="text" id="e2" placeholder="MM/YYYY or Present"></div>
+          </div>
+        </div>
+      </div>
+      <button type="button" class="add" id="addJob">+ Add another</button>
+      <div class="row">
+        <div class="field"><label for="yoe">Total years of experience</label><input type="number" id="yoe" step="0.1" min="0"></div>
+        <div class="field"><label for="notice">Notice period</label><input type="text" id="notice"></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="cur_ctc">Current CTC (LPA)</label><input type="text" id="cur_ctc"></div>
+        <div class="field"><label for="exp_ctc">Expected CTC (LPA)</label><input type="text" id="exp_ctc"></div>
+      </div>
+
+      <h2>Education</h2>
+      <div class="block">
+        <div class="row">
+          <div class="field"><label for="school">School</label><input type="text" id="school"></div>
+          <div class="field">
+            <label for="degree">Degree</label>
+            <select id="degree"><option value="">Select…</option><option>High School</option><option>Associate's Degree</option><option>B.Tech</option><option>Bachelor's Degree</option><option>Master's Degree</option><option>MBA</option><option>Ph.D.</option></select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="discipline">Discipline</label><input type="text" id="discipline"></div>
+          <div class="field"><label for="grad">Graduation year</label><input type="text" id="grad"></div>
+        </div>
+      </div>
+
+      <h2>A few questions</h2>
+      <fieldset>
+        <legend>Are you legally authorized to work in India? <span class="req">*</span></legend>
+        <div class="opts"><label><input type="radio" name="auth" value="yes"> Yes</label><label><input type="radio" name="auth" value="no"> No</label></div>
+      </fieldset>
+      <fieldset>
+        <legend>Will you now or in the future require visa sponsorship? <span class="req">*</span></legend>
+        <div class="opts"><label><input type="radio" name="sponsor" value="yes"> Yes</label><label><input type="radio" name="sponsor" value="no"> No</label></div>
+      </fieldset>
+      <fieldset>
+        <legend>Are you willing to relocate to Bengaluru?</legend>
+        <div class="opts"><label><input type="radio" name="relocate" value="yes"> Yes</label><label><input type="radio" name="relocate" value="no"> No</label></div>
+      </fieldset>
+      <div class="field">
+        <label for="source">How did you hear about this job?</label>
+        <select id="source"><option value="">Select…</option><option>LinkedIn</option><option>Company website</option><option>Referral</option><option>Naukri</option><option>Other</option></select>
+      </div>
+      <div class="field">
+        <label for="why">Why do you want to join Northwind Labs?</label>
+        <textarea id="why"></textarea>
+      </div>
+
+      <h2>Voluntary self-identification</h2>
+      <div class="row">
+        <div class="field"><label for="gender">Gender</label>
+          <select id="gender"><option value="">Select…</option><option>Male</option><option>Female</option><option>Non-binary</option><option>Decline to self-identify</option></select></div>
+        <div class="field"><label for="veteran">Veteran status</label>
+          <select id="veteran"><option value="">Select…</option><option>I am not a protected veteran</option><option>I identify as a protected veteran</option><option>I don't wish to answer</option></select></div>
+      </div>
+      <div class="field"><label for="disability">Disability status</label>
+        <select id="disability"><option value="">Select…</option><option>No, I don't have a disability</option><option>Yes, I have a disability</option><option>I don't wish to answer</option></select></div>
+
+      <label class="consent" data-aa-ignore><input type="checkbox"> I agree to the privacy policy.</label>
+      <button type="submit" class="submit">Submit application</button>
+    </form>
+  </div>
+
+  <script>
+    // "Add another" job section, like real ATS forms.
+    let jobN = 2;
+    document.getElementById('addJob').addEventListener('click', () => {
+      jobN++;
+      const div = document.createElement('div');
+      div.className = 'block job';
+      div.innerHTML = `<h3>Job ${jobN}</h3>
+        <div class="row">
+          <div class="field"><label for="c${jobN}">Company</label><input type="text" id="c${jobN}"></div>
+          <div class="field"><label for="t${jobN}">Title</label><input type="text" id="t${jobN}"></div>
+        </div>
+        <div class="row">
+          <div class="field"><label for="s${jobN}">Start date</label><input type="month" id="s${jobN}"></div>
+          <div class="field"><label for="e${jobN}">End date</label><input type="text" id="e${jobN}" placeholder="MM/YYYY or Present"></div>
+        </div>`;
+      document.getElementById('jobs').append(div);
+    });
+  </script>
+  <script src="score.js"></script>
+</body>
+</html>
